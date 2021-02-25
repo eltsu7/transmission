@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: update submodules
-      run: git submodule update --init
+      uses: textbook/git-checkout-submodule-action@master
     - name: make build dir
       run: mkdir build
     - name: cmake
