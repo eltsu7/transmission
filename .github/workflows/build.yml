@@ -1,0 +1,24 @@
+/.github/workflows/c-cpp.yml
+
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: update submodules
+      run: git submodule update --init
+    - name: make build dir
+      run: mkdir build
+    - name: cd to build dir
+      working-directory: ./build
+    - name: cmake
+      run: cmake ..
+    - name: make
+      run: make    
+    - name: make install
+      run: sudo make install
