@@ -1,6 +1,4 @@
-/.github/workflows/c-cpp.yml
-
-name: C/C++ CI
+name: CI/CD Build
 
 on: [push]
 
