@@ -5,6 +5,9 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./build
 
     steps:
     - uses: actions/checkout@v2
@@ -12,8 +15,6 @@ jobs:
       run: git submodule update --init
     - name: make build dir
       run: mkdir build
-    - name: cd to build dir
-      working-directory: ./build
     - name: cmake
       run: cmake ..
     - name: make
