@@ -36,6 +36,3 @@ jobs:
     - name: make
       working-directory: ${{github.workspace}}/build
       run: make
-    - name: make distcheck
-      working-directory: ${{github.workspace}}/build
-      run: make distcheck
