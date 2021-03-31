@@ -1,5 +1,7 @@
 ## About
 
+Testi :D
+
 Transmission is a fast, easy, and free BitTorrent client. It comes in several flavors:
   * A native Mac OS X GUI application
   * GTK+ and Qt GUI applications for Linux, BSD, etc.
