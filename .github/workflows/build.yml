@@ -46,7 +46,7 @@ jobs:
         mv sonar-scanner-4.6.0.2311-linux sonar-scanner-cli
         
     - name: Make
-      working-directory: /opt
+      working-directory: ${{github.workspace}}/build
       run: /opt/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir /tmp/sonarcloud-wrapper-output make
       
     - name: Run sonar-scanner
@@ -57,7 +57,6 @@ jobs:
         -D sonar.cfamily.threads=2
         -D sonar.login="${{ secrets.SONAR_TOKEN }}"
         -D sonar.host.url="https://sonarcloud.io/"
-        
         -D sonar.exclusions="${{github.workspace}}/qt/translations/"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
