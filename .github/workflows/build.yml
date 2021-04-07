@@ -53,7 +53,7 @@ jobs:
       working-directory: ${{github.workspace}}
       shell: bash
       run: >-
-        /sbw/sonar-scanner-cli/bin/sonar-scanner
+        /opt/sonar-scanner-cli/bin/sonar-scanner
         -D sonar.cfamily.threads=2
         -D sonar.login="${{ secrets.SONAR_TOKEN }}"
         -D sonar.host.url="https://sonarcloud.io/"
