@@ -32,20 +32,31 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
-
-    - name: make
-      working-directory: ${{github.workspace}}/build
-      run: make
-
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
+      
+    - name: Sonarcloud build-wrapper
+      working-directory: /sbw
+      shell: bash
+      run: wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip && 
+        unzip build-wrapper-linux-x86.zip &&
+        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip && 
+        unzip sonar-scanner-cli-4.6.0.2311-linux.zip && 
+        mv sonar-scanner-4.6.0.2311-linux sonar-scanner-cli
+        
+    - name: Make
+      working-directory: /sbw
+      run: /sbw/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir /tmp/sonarcloud-wrapper-output make
+      
+    - name: Run sonar-scanner
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: >-
+        /sbw/sonar-scanner-cli/bin/sonar-scanner
+        -D sonar.cfamily.threads=2
+        -D sonar.login="${{ secrets.SONAR_TOKEN }}"
+        -D sonar.host.url="https://sonarcloud.io/"
+        
+        -D sonar.exclusions="${{github.workspace}}/qt/translations/"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
