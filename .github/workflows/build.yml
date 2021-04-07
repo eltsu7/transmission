@@ -58,6 +58,7 @@ jobs:
         -D sonar.login="${{ secrets.SONAR_TOKEN }}"
         -D sonar.host.url="https://sonarcloud.io/"
         -D sonar.exclusions="${{github.workspace}}/qt/translations/"
+        -D sonar.cfamily.build-wrapper-output="/tmp/sonarcloud-wrapper-output"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
