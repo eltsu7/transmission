@@ -15,7 +15,7 @@ jobs:
       run: cmake -E make_directory ${{github.workspace}}/build
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev
+      run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev libz-dev
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
