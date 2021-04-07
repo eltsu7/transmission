@@ -17,6 +17,11 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install libcurl4-openssl-dev libz-dev libssl-dev automake libtool qtbase5-dev qttools5-dev
 
+    - name: Sonarcloud build-wrapper
+      working-directory: /opt
+      shell: bash
+      run: wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip && unzip build-wrapper-linux-x86.zip &&
+
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
       # access regardless of the host operating system
@@ -32,22 +37,17 @@ jobs:
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
-
-    - name: Sonarcloud build-wrapper
-      working-directory: /sbw
-      shell: bash
-      run: wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip && unzip build-wrapper-linux-x86.zip &&
       
     - name: Sonarcloud scanner
-      working-directory: /sbw
+      working-directory: /opt
       shell: bash
       run: wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.0.2311-linux.zip && 
         unzip sonar-scanner-cli-4.6.0.2311-linux.zip && 
         mv sonar-scanner-4.6.0.2311-linux sonar-scanner-cli
         
     - name: Make
-      working-directory: /sbw
-      run: /sbw/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir /tmp/sonarcloud-wrapper-output make
+      working-directory: /opt
+      run: /opt/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir /tmp/sonarcloud-wrapper-output make
       
     - name: Run sonar-scanner
       working-directory: ${{github.workspace}}
