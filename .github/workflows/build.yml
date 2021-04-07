@@ -20,7 +20,7 @@ jobs:
     - name: Sonarcloud build-wrapper
       working-directory: /opt
       shell: bash
-      run: wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip && unzip build-wrapper-linux-x86.zip &&
+      run: wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip && unzip build-wrapper-linux-x86.zip
 
     - name: Configure CMake
       # Use a bash shell so we can use the same syntax for environment variable
